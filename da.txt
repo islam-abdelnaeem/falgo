@@ -1,0 +1,764 @@
+//linked list 
+
+#include <iostream>
+	using namespace std;
+#include<stdlib.h>
+struct node
+{
+	int number;
+	node* next;
+};
+//Make new node
+node* make_new_node(int x)
+{
+	node* p;
+	p = new node;
+	p->number = x;
+	p->next = NULL;
+	return p;
+}
+//Insert in begining
+node* insert_begin(node* p)
+{
+	int x;
+	cout << "Enter value in new node \n";
+	cin >> x;
+	node* temp;
+	if (p == NULL)
+		p = make_new_node(x);
+	else
+	{
+	temp = make_new_node(x);
+	temp->next = p; p = temp;
+}
+	return p;
+}
+//insert in last
+node* insert_last(node* p)
+{
+	int x;
+	cout << "Enter value in new node \n";
+	cin >> x;
+	node* curr, * temp;
+	if (p == NULL)
+		p = make_new_node(x);
+	else
+	{
+		curr = p;
+		while (curr->next != NULL)
+			curr = curr->next;
+		temp = make_new_node(x);
+		curr->next = temp;
+	}
+	return p;
+}
+// insert value (x) after a node contain the value (n) or in last if (n) is not exist
+node* insert_middle(node* p, int n)
+{
+	int x;
+	cout << "Enter value in new node \n";
+	cin >> x;
+	node* curr, * temp;
+	if (p == NULL)
+		p = make_new_node(x);
+	else {
+		curr = p;
+		while (curr->number != n && curr->next != NULL)
+			curr = curr->next;
+		temp = make_new_node(x);
+		temp->next = curr->next;
+		curr->next = temp;
+	}
+	return p;
+}
+//Delete first node
+node* delete_first(node* p)
+{
+	if (p == NULL)
+		cout << "No nodes found \n";
+	else
+	{
+		node* first;
+		first = p;
+		p = p->next;
+		delete first;
+	}
+	return p;
+}
+//Delete last node
+node* delete_last(node* p)
+{
+	node* curr, * d;
+	if (p == NULL)
+		cout << "No nodes found \n";
+	curr = p;
+	while (curr->next->next != NULL)curr = curr->next;
+	d = curr->next;
+	curr->next = NULL;
+	delete d;
+	return p;
+}
+//Delete "node" after the node contains the value (n) or last node if n is not exist
+node* delete_middle(node* p, int m)
+{
+	node* curr, * d;
+	curr = p;
+	while (curr->next->number != m && curr->next->next != NULL)
+		curr = curr->next;
+	d = curr->next;
+	curr->next = d->next;
+	delete d;
+	return p;
+}
+//Display (print) node elements
+void display_list(node* p)
+{
+	node* curr;
+	if (p == NULL)
+		cout << "No nodes found \n";
+	else
+	{
+		cout << "\n Data in the nodes are:\n";
+		curr = p;
+		while (curr != NULL)
+		{
+			cout << curr->number << "\n";
+			curr = curr->next;
+		}
+	}
+}
+//search
+void search_value(node *p, int key)
+{
+	int i = 0, flag = 0;
+	node* curr;
+	if (p == NULL)
+		cout << "No nodes found \n";
+	else
+	{
+		curr = p;
+		while(curr!=NULL)
+		{if (curr->number==key) 
+		{
+			cout << "Item " << key << " is found at location " << (i + 1)<<endl;
+			flag = 1;
+			break;
+		}
+		i++;
+		curr = curr->next;
+		}
+		if (flag == 0)
+			cout << "Item " << key << " is not found." << endl;
+	}
+}
+int main()
+{
+	node* p;
+	p = NULL;
+	int ch;
+	int x, n, m, key;
+	cout << "\n 1.Make a node. \n 2.Insert first. \n 3.Insert last. \n 4.Insert middle. \n 5.Delete first. \n 6.Delete last. \n 7.Delete middle. \n 8.Display \n 9.Search \n 10.Exitprogram \n";
+		do {
+			cout << "Enter your choice";
+			cin >> ch;
+			switch (ch)
+			{
+			case 1: cout << "Enter x value to make a new node. \n";
+				cin >> x;
+				p = make_new_node(x); break;
+			case 2: p = insert_begin(p); break;
+			case 3: p = insert_last(p); break;
+			case 4: cout << "\n Enter a value (n) to insert a node middle after it: ";
+				cin >> n;
+				p = insert_middle(p, n); break;
+			case 5: p = delete_first(p); break;
+			case 6: p = delete_last(p); break;
+			case 7:cout << "\n Enter a value of (m) to delete a middle node: ";
+				cin >> m;
+				p = delete_middle(p, m); break;
+			case 8: display_list(p); break;
+			case 9: cout << "\n Enter key value to search:"; cin >> key;
+				search_value(p, key); break;
+			case 10: exit(0); break;
+			default: cout << "\n Invalid choice.";
+			}
+		} while (ch != 10);
+		return 0;
+}
+///////////////////////////////////////////////////////////////////////////////////////////
+//queue with list
+//queue with linked list
+
+#include <iostream>
+using namespace std;
+#include<stdlib.h>
+struct node
+{
+	int number;
+	node* next;
+};
+//Make new node
+node* make_new_node(int x)
+{
+	node* p;
+	p = new node;
+	p->number = x;
+	p->next = NULL;
+	return p;
+}
+//insert in last
+node* insert_last_enqueue(node* p)
+{
+	int x;
+	cout << "Enter value in new node \n";
+	cin >> x;
+	node* curr, * temp;
+	if (p == NULL)
+		p = make_new_node(x);
+	else
+	{
+		curr = p;
+		while (curr->next != NULL)
+			curr = curr->next;
+		temp = make_new_node(x);
+		curr->next = temp;
+	}
+	return p;
+}
+
+//Delete first node
+node* delete_first_dequeue(node* p)
+{
+	if (p == NULL)
+		cout << "No nodes found \n";
+	else
+	{
+		node* first;
+		first = p;
+		p = p->next;
+		delete first;
+	}
+	return p;
+}
+
+//Display (print) node elements
+void display_list(node* p)
+{
+	node* curr;
+	if (p == NULL)
+		cout << "No nodes found \n";
+	else
+	{
+		cout << "\n Data in the nodes are:\n";
+		curr = p;
+		while (curr != NULL)
+		{
+			cout << curr->number << "\n";
+			curr = curr->next;
+		}
+	}
+}
+
+//count -- size
+int count(node* p)
+{
+	node* curr;
+	if (p == NULL)
+		return 0;
+	else
+	{
+		int i = 0;
+		curr = p;
+		while (curr!=NULL)
+		{
+			curr = curr->next;
+			i++;
+		}
+		return i;
+	}
+}
+
+int main()
+{
+	node* p;
+	p = NULL;
+	
+	p = make_new_node(1); 
+	display_list(p);
+	p = insert_last_enqueue(p);
+	display_list(p); 
+	p = insert_last_enqueue(p);
+	display_list(p);  //1 2 3
+	cout << "\n Size= " << count(p);
+	p = delete_first_dequeue(p);
+	display_list(p);   //2 3
+	cout << "\n Size= " << count(p);
+		
+	return 0;
+}
+////////////////////////////////////////////////////////////////////////////////
+// stack with linked list
+
+#include <iostream>
+using namespace std;
+#include<stdlib.h>
+struct node
+{
+	int number;
+	node* next;
+};
+//Make new node
+node* make_new_node(int x)
+{
+	node* p;
+	p = new node;
+	p->number = x;
+	p->next = NULL;
+	return p;
+}
+//Insert in begining
+node* insert_begin_push(node* p)
+{
+	int x;
+	cout << "Enter value in new node \n";
+	cin >> x;
+	node* temp;
+	if (p == NULL)
+		p = make_new_node(x);
+	else
+	{
+		temp = make_new_node(x);
+		temp->next = p; p = temp;
+	}
+	return p;
+}
+
+//Delete first node
+node* delete_first_pop(node* p)
+{
+	if (p == NULL)
+		cout << "No nodes found \n";
+	else
+	{
+		node* first;
+		first = p;
+		p = p->next;
+		delete first;
+	}
+	return p;
+}
+
+//Display (print) node elements
+void display_list(node* p)
+{
+	node* curr;
+	if (p == NULL)
+		cout << "No nodes found \n";
+	else
+	{
+		cout << "\n Data in the nodes are:\n";
+		curr = p;
+		while (curr != NULL)
+		{
+			cout << curr->number << "\n";
+			curr = curr->next;
+		}
+	}
+}
+
+//count -- size
+int count(node* p)
+{
+	node* curr;
+	if (p == NULL)
+		return 0;
+	else
+	{
+		int i = 0;
+		curr = p;
+		while (curr!=NULL)
+		{
+			curr = curr->next;
+			i++;
+		}
+		return i;
+	}
+}
+
+int main()
+{
+	node* p;
+	p = NULL;
+	
+	p = make_new_node(1); 
+	display_list(p);
+	p = insert_begin_push(p);
+	display_list(p); 
+	p = insert_begin_push(p);
+	display_list(p);  //3 2 1
+	cout << "\n Size= " << count(p);
+	p = delete_first_pop(p);
+	display_list(p);   //2 1
+	cout << "\n Size= " << count(p);
+		
+	return 0;
+}
+///////////////////////////
+// circular queue
+
+#include <iostream>
+using namespace std;
+#define SIZE 5 /* Size of Circular Queue */
+int items[SIZE], front=-1, rear=-1;
+
+// Check if the queue is full
+bool isFull() {
+    if (front == 0 && rear == SIZE - 1) {
+        return true;
+    }
+    if (front == rear + 1) {
+        return true;
+    }
+    return false;
+}
+// Check if the queue is empty
+bool isEmpty() {
+    if (front == -1)
+        return true;
+    else
+        return false;
+}
+// Adding an element
+void enQueue(int element) {
+    if (isFull()) {
+        cout << "Queue is full";
+    }
+    else {
+        if (front == -1) front = 0;
+        rear = (rear + 1) % SIZE;
+        items[rear] = element;
+        cout << endl << "Inserted: " << element << endl;
+    }
+}
+// Removing an element
+void deQueue() {
+    
+    if (isEmpty()) {
+        cout << "Queue is empty" << endl;
+        return;
+    }
+    else {
+        cout<<"\n Deleted element from queue is: "<< items[front]<<endl;
+
+        // Q has only one element, so we reset the queue after deleting it.
+        if (front == rear) {
+            front = -1;
+            rear = -1;
+        }
+        
+        else {
+            front = (front + 1) % SIZE;
+        }
+        
+    }
+}
+
+int peek()
+{
+    if (isEmpty())
+    {
+        cout << "\n Qeueue is empty; \n";
+        return -1;
+    }
+    else
+        return items[front];
+}
+
+void display() {
+    // Function to display status of Circular Queue
+    int i;
+    if (isEmpty()) {
+        cout << endl << "Empty Queue" << endl;
+    }
+    else {
+        
+        cout << "\n Elements (items) of queue are: \n";
+        for (i = front; i != rear; i = (i + 1) % SIZE)
+            cout << items[i]<<"\t";
+        cout << items[i] << endl;
+           
+    }
+}
+
+    int main() {
+ 
+     
+        enQueue(1);
+        enQueue(2);
+        enQueue(3);
+        enQueue(4);
+        enQueue(5);
+        display();
+
+        deQueue();
+        display();
+        deQueue();
+        display();
+        
+        cout << "\n Peek of queue: " << peek() << endl;
+
+        enQueue(6);
+        display();
+        cout << "\n Peek of queue: " << peek() << endl;
+
+        enQueue(7);
+        display();
+
+        enQueue(8); //queue is full
+
+        return 0;
+}
+//////////////////////////////////////////
+// satck
+
+#include <iostream>
+using namespace std;
+#include <stdlib.h>
+#define SIZE 15
+int top=-1,a[SIZE];
+void push (int item)
+{
+if (top==SIZE-1)
+{cout<<"over flow"<<endl;return;}
+
+top+=1;
+a[top]=item;
+
+}
+ void pop ()
+{
+if (top==-1)
+{cout<<"empty no thig to poped from stack"<<endl;return;}
+ 
+
+cout<<"opoped element is  "<<a[top]<<endl;
+
+top-=1;
+
+}
+
+
+int search (int item)
+{
+if (top==-1){
+cout<<"empty  stack"<<endl;
+return -1;
+}
+
+for(int i=0;i<=top;i++)
+if (a[i]==item )
+return i;
+return -1;} 
+
+int size ()
+{
+if (top==-1)
+{cout<<"empty stack"<<endl;
+return 0;}
+else return top+1;}
+
+void maxmium()
+{int max, pos;
+
+if (top==-1)
+{cout<<"empty stack"<<endl;
+return;}
+
+max=a[0];
+pos=0;
+for (int i=1;i<=top;i++)
+if (a[i]>max)
+{max=a[i];
+pos=i;}
+
+cout<<"max element of the stack is "<<max<<"and it's position is "<<pos<<endl;
+}
+
+
+
+void display ()
+{
+if (top==-1)
+{cout<<"empty stack"<<endl;
+return ;}
+
+for (int i=0;i<=top;i++)
+cout<<a[i]<<"\t";
+cout<<endl;
+
+}
+int main()
+{
+int ch ,item ,index,data ;
+cout<<"\n 1- push \n2-pop\n3-size \n4- seach \n5-maxmium \n 6-exit"<<endl;
+
+do{
+cout<<"enter your choice"<<endl;
+cin >>ch;
+switch(ch)
+{case 1:
+cout<<"enter elment to push in the stack"<<endl;
+cin >>item;
+push(item);
+display();
+break;
+case 2:
+pop();
+display();
+break;
+case 3:
+cout<<"the size of the stack is "<<size()<<endl;
+break;
+case 4:
+cout<<"enter item to be searched in the stack "<<endl;
+cin>>data;
+index=search (data);
+if (index==-1)
+cout<<"not found";
+else 
+cout<<"item found at index "<<index<<endl;
+break;
+case 5:maxmium();
+break;
+case 6:
+exit(0);
+break;
+default:
+cout<<"in valid choice"<<endl;
+break;}
+
+}while (ch!=6);
+return 0;
+}
+///////////////////////////////////////////////
+// queue 
+#include<iostream>
+using namespace std;
+#include<stdio.h>
+#define SIZE 10
+int a[SIZE], front=-1,rear=-1;
+//add items
+void enqueue (int data)
+{
+	if (rear==(SIZE-1))
+    {
+		cout<<"\n Queue is over flow\n";
+return;
+    }
+rear++;
+a[rear]=data;
+if(front==-1)
+front++;
+}
+//delete items
+void dequeue()
+{
+	if (front==-1)
+	{
+		cout<<"\nQueue is empty \n";
+		return;
+	}
+
+	cout<<"\nthe deleted element from queue is : "<<a[front];
+	if (front==rear)
+		front=rear=-1;
+	else
+		front++;
+}
+//search an item
+int search(int key)
+{ int i;
+	if(front==-1)
+	{
+		cout<<"queue is empty";
+		return -1;
+	}
+	for ( i=front; i<=rear; i++)
+		if(a[i]==key)
+			return i; // index of key 
+	return -1;
+}
+//calc size 
+int size()
+{
+	if (front==-1)
+		return 0;
+	else 
+		return rear-front+1;
+}
+//find max
+void maximum()
+{
+	int max ,pos ,i;
+if (front==-1)
+{
+	cout<<"\n Queue is empty";
+	return;
+}
+max = a[front];
+pos = front;
+for(i=front;i<=rear;i++)
+if (a[i]>max)
+{
+	   max=a[i];
+	   pos=i;
+}  
+cout<<"\n the max value in queue is :"<<max<<"and its position (index) is:"<<pos<<endl;
+}
+//print
+void display()
+{
+	if (front=-1)
+	{ cout<<"\n QUeue is empty";
+	return ;
+	}
+cout<<"\n the elemets of Queue are :";
+	for(int i=front;i<=rear;i++)
+		cout<<a[i]<<"/t";
+}
+int main()
+{
+	int ch, index ,key, item , nsize , data;
+	cout<<"\n 1.Enqueue \n 2.Dequeue \n 3.Size \n 4.Search \n 5.Maximum \n 6.Exit \n";
+	do{
+		cout<<"/n Enter your choice :" ;
+		cin>>ch;
+switch(ch)
+{
+case 1: cout<<"/n enter element to be add to queue :";
+	cin >>data;
+	enqueue(data);
+	display();
+	break;
+case 2: dequeue();
+        display();
+    break;
+case 3: nsize=size();
+	cout<<"/n the size (no.of elements) in queue is :"<<nsize;
+    break;
+case 4: cout<<"/n Enter the item (key) to be searched in queue :/n";
+			cin>>key;
+	index=search(key);
+	if (index>=0)
+		cout<<"/n the element "<<key<<"is found in queue ";
+	break;
+case 5: maximum();
+	break;
+case 6: exit(0);
+	break;
+default: cout <<"/n Invaild choice./n";
+}
+	}while(ch!=6);
+	return 0;
+}
+     
